@@ -8,20 +8,20 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { UserService } from './user.service';
 
 @Controller('users')
 export class UserController {
+  constructor(private readonly userService: UserService) {}
+
   @Post()
   async create(@Body() body) {
-    return body;
+    return this.userService.postUser(body);
   }
 
   @Get()
   async read() {
-    return [
-      { name: 'Pedro', age: 36 },
-      { name: 'Andre', age: 25 },
-    ];
+    return this.userService.getUsers();
   }
 
   @Get(':id')
