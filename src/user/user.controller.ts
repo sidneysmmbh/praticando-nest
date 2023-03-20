@@ -26,14 +26,16 @@ export class UserController {
 
   @Get(':id')
   async readOne(@Param() param) {
-    return { user: { name: 'Pedro', age: 36 }, param };
+    const user = this.userService.getUser(param.id);
+    return { user, param };
   }
 
   @Put(':id')
   async update(@Param() params, @Body() body) {
+    const user = this.userService.putUser(params.id, body);
     return {
       method: 'put',
-      body,
+      user,
       params,
     };
   }
@@ -49,7 +51,6 @@ export class UserController {
 
   @Delete(':id')
   async delete(@Param() param) {
-    const id = param.id;
-    return `O usuário ${id} foi apagado.`;
+    return this.userService.delete(param.id);
   }
 }
