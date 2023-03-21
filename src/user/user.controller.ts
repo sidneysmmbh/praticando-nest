@@ -4,18 +4,20 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Put,
 } from '@nestjs/common';
 import { UserService } from './user.service';
+import { CreatUserDto } from './creatUser.dto';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  async create(@Body() body) {
+  async create(@Body() body: CreatUserDto) {
     return this.userService.postUser(body);
   }
 
@@ -25,18 +27,21 @@ export class UserController {
   }
 
   @Get(':id')
-  async readOne(@Param() param) {
-    const user = this.userService.getUser(param.id);
-    return { user, param };
+  async readOne(@Param('id', ParseIntPipe) id: number) {
+    const user = this.userService.getUser(id);
+    return { user, id };
   }
 
   @Put(':id')
-  async update(@Param() params, @Body() body) {
-    const user = this.userService.putUser(params.id, body);
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: CreatUserDto,
+  ) {
+    const user = this.userService.putUser(id, body);
     return {
       method: 'put',
       user,
-      params,
+      id,
     };
   }
 
@@ -50,7 +55,7 @@ export class UserController {
   }
 
   @Delete(':id')
-  async delete(@Param() param) {
-    return this.userService.delete(param.id);
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.delete(id);
   }
 }

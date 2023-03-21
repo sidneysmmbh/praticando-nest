@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import { User } from './userInterface';
 
-let listUsers: { id: number; name: string; age: number }[] = [
-  { id: 1, name: 'João', age: 45 },
-];
+let listUsers: User[] = [{ id: 1, name: 'João', age: 45 }];
 
 @Injectable()
 export class UserService {
@@ -10,7 +9,7 @@ export class UserService {
     return listUsers;
   }
 
-  postUser(user: { id: number; name: string; age: number }) {
+  postUser(user: User) {
     listUsers.push(user);
     return { mensagem: 'O usuário foi criado com sucesso.', user };
   }
@@ -20,7 +19,7 @@ export class UserService {
     return user;
   }
 
-  putUser(id: number, user: { id: number; name: string; age: number }) {
+  putUser(id: number, user: User) {
     const index: number = listUsers.findIndex((item) => item.id == id);
     listUsers[index] = user;
     return user;
