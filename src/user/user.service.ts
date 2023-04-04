@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User } from './userInterface';
+import { User } from './user.interface';
 
 let listUsers: User[] = [{ id: 1, name: 'João', age: 45 }];
 
@@ -15,7 +15,7 @@ export class UserService {
   }
 
   getUser(id: number) {
-    const user = listUsers.find((item) => item.id == id);
+    const user: User = listUsers.find((item) => item.id == id);
     return user;
   }
 

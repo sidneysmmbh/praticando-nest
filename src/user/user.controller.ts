@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreatUserDto } from './creatUser.dto';
+import { User } from './user.interface';
 
 @Controller('users')
 export class UserController {
@@ -28,7 +29,7 @@ export class UserController {
 
   @Get(':id')
   async readOne(@Param('id', ParseIntPipe) id: number) {
-    const user = this.userService.getUser(id);
+    const user: User = this.userService.getUser(id);
     return { user, id };
   }
 
