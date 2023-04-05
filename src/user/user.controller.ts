@@ -8,10 +8,12 @@ import {
   Patch,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreatUserDto } from './creatUser.dto';
 import { User } from './user.interface';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('users')
 export class UserController {
@@ -22,6 +24,7 @@ export class UserController {
     return this.userService.postUser(body);
   }
 
+  @UseGuards(AuthGuard)
   @Get()
   async read() {
     return this.userService.getUsers();
